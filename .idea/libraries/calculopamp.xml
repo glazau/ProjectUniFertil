@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="calculopamp">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/calculopamp/out/artifacts/calculopamp_jar/calculopamp.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
