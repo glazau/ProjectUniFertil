@@ -63,13 +63,13 @@ public class ActionCalculoPAMP implements AcaoRotinaJava {
                             }
                             BigDecimal deficienciaGrave = garantia.subtract(tolerancia.multiply(BigDecimal.valueOf(1.5)));
                             BigDecimal deficienciaGravissima = garantia.subtract(tolerancia.multiply(BigDecimal.valueOf(3)));
-                            if (((resultadoAnaliseQuimica.compareTo(resultadoDentroTolerancia) == 1) || (resultadoAnaliseQuimica.compareTo(resultadoDentroTolerancia) == 0)) && teorMaior40==false) {
+                            if (((resultadoAnaliseQuimica.compareTo(resultadoDentroTolerancia) == 1) || (resultadoAnaliseQuimica.compareTo(resultadoDentroTolerancia) == 0)) && !teorMaior40) {
                                 registroSelcionado.setCampo("TOLERANCIA", tolerancia);
                                 registroSelcionado.setCampo("CLASSIFICACAO", '1');
-                            }else if((resultadoAnaliseQuimica.compareTo(resultadoDentroTolerancia) == 1) && teorMaior40==true) {
+                            }else if((resultadoAnaliseQuimica.compareTo(resultadoDentroTolerancia) == 1) && teorMaior40) {
                                 registroSelcionado.setCampo("TOLERANCIA", tolerancia);
                                 registroSelcionado.setCampo("CLASSIFICACAO", '1');
-                            }else if((resultadoAnaliseQuimica.compareTo(resultadoDentroTolerancia) == 0) && teorMaior40==true) {
+                            }else if((resultadoAnaliseQuimica.compareTo(resultadoDentroTolerancia) == 0) && teorMaior40) {
                                 registroSelcionado.setCampo("TOLERANCIA", tolerancia);
                                 registroSelcionado.setCampo("CLASSIFICACAO", '2');
                             }else if ((resultadoAnaliseQuimica.compareTo(resultadoDentroTolerancia) == -1) && resultadoAnaliseQuimica.compareTo(deficienciaGrave) == 1) {
