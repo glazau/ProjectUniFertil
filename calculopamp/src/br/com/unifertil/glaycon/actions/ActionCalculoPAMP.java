@@ -20,7 +20,7 @@ public class ActionCalculoPAMP implements AcaoRotinaJava {
     @Override
     public void doAction(ContextoAcao contextoAcao) throws Exception {
         JapeSession.SessionHandle hnd = null;
-        JdbcWrapper jdbcWrapper = null;
+        JdbcWrapper jdbcWrapper;
         NativeSql nativeSql = null;
         try {
             hnd = JapeSession.open();
