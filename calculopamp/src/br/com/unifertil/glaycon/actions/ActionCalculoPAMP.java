@@ -1,4 +1,4 @@
-package br.com.unifertil.glaycon.calculopamp;
+package br.com.unifertil.glaycon.actions;
 
 import br.com.sankhya.extensions.actionbutton.AcaoRotinaJava;
 import br.com.sankhya.extensions.actionbutton.ContextoAcao;
