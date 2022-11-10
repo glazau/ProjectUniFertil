@@ -4,6 +4,7 @@ import br.com.sankhya.extensions.actionbutton.AcaoRotinaJava;
 import br.com.sankhya.extensions.actionbutton.ContextoAcao;
 import br.com.sankhya.extensions.actionbutton.Registro;
 import br.com.sankhya.jape.EntityFacade;
+import br.com.sankhya.jape.PersistenceException;
 import br.com.sankhya.jape.core.JapeSession;
 import br.com.sankhya.jape.dao.JdbcWrapper;
 import br.com.sankhya.jape.sql.NativeSql;
@@ -32,6 +33,9 @@ public class ActionCalculoPAMP implements AcaoRotinaJava {
                     BigDecimal seqAmostra = (BigDecimal) registroSelcionado.getCampo("SEQAMOSTRA");
                     BigDecimal sequencia = (BigDecimal) registroSelcionado.getCampo("SEQUENCIA");
                     String resultadoAnaliseQuimicaStringComVirgula = (String) registroSelcionado.getCampo("RESULTADO");
+                    if(resultadoAnaliseQuimicaStringComVirgula==null){
+                        throw new PersistenceException("Preencha o campo resultado");
+                    }
                     String resultadoAnaliseQuimicaString = resultadoAnaliseQuimicaStringComVirgula.replace(',','.');
                     BigDecimal tolerancia;
                     DynamicVO controleAmostra = getControleAmostra(seqAmostra);
