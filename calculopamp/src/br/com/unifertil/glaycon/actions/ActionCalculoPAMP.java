@@ -93,7 +93,7 @@ public class ActionCalculoPAMP implements AcaoRotinaJava {
             }
 
         } catch (Exception e) {
-            MGEModelException.throwMe(e);
+            System.out.println(e);
         } finally {
             JapeSession.close(hnd);
         }

@@ -8,7 +8,6 @@ public class PerfilMetal {
     private BigDecimal sequenciaQuimica;
     private BigDecimal codElemento;
     private String metodo;
-    private String garantia;
     private String observacao;
     private String simbolo;
 
@@ -42,14 +41,6 @@ public class PerfilMetal {
 
     public void setMetodo(String metodo) {
         this.metodo = metodo;
-    }
-
-    public String getGarantia() {
-        return garantia;
-    }
-
-    public void setGarantia(String garantia) {
-        this.garantia = garantia;
     }
     public String getObservacao() {
         return observacao;
