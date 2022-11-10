@@ -41,7 +41,7 @@ public class ActionCalculoPAMP implements AcaoRotinaJava {
                         EntityFacade dwfFacade = EntityFacadeFactory.getDWFFacade();
                         jdbcWrapper = dwfFacade.getJdbcWrapper();
                         nativeSql = new NativeSql(jdbcWrapper);
-                        nativeSql.loadSql(getClass(), "query.sql");
+                        nativeSql.loadSql(getClass(), "ActionCalculoPAMP.sql");
                         nativeSql.setNamedParameter("CODPROD", codprod);
                         nativeSql.setNamedParameter("SEQAMOSTRA", seqAmostra);
                         nativeSql.setNamedParameter("SEQUENCIA", sequencia);
