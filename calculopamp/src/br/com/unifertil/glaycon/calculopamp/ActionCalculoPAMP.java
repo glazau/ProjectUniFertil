@@ -53,27 +53,34 @@ public class ActionCalculoPAMP implements AcaoRotinaJava {
                             BigDecimal formula = rs.getBigDecimal("FORMULA");
                             BigDecimal formulaDois = rs.getBigDecimal("FORMULADOIS");
                             BigDecimal resultadoDentroTolerancia;
+                            boolean  teorMaior40 = garantia.compareTo(BigDecimal.valueOf(40))==0 || garantia.compareTo(BigDecimal.valueOf(40))==1;
                             if ((garantia.compareTo(BigDecimal.valueOf(40)) == 1) || garantia.compareTo(BigDecimal.valueOf(40)) == 0) {
-                                tolerancia = garantia.subtract(formula);
-                                resultadoDentroTolerancia = garantia.subtract(tolerancia);
+                                resultadoDentroTolerancia =  garantia.subtract(formula);
+                                tolerancia = garantia.subtract(resultadoDentroTolerancia);
                             } else {
                                 tolerancia = garantia.multiply(formula).add(formulaDois);
                                 resultadoDentroTolerancia = garantia.subtract(tolerancia);
                             }
                             BigDecimal deficienciaGrave = garantia.subtract(tolerancia.multiply(BigDecimal.valueOf(1.5)));
                             BigDecimal deficienciaGravissima = garantia.subtract(tolerancia.multiply(BigDecimal.valueOf(3)));
-                            if ((resultadoAnaliseQuimica.compareTo(resultadoDentroTolerancia) == 1) || (resultadoAnaliseQuimica.compareTo(resultadoDentroTolerancia) == 0)) {
-                                registroSelcionado.setCampo("RESULTADOFORMULA", tolerancia);
-                                registroSelcionado.setCampo("RESULTADOTOL", '4');
-                            } else if ((resultadoAnaliseQuimica.compareTo(resultadoDentroTolerancia) == -1) && resultadoAnaliseQuimica.compareTo(deficienciaGrave) == 1) {
-                                registroSelcionado.setCampo("RESULTADOFORMULA", tolerancia);
-                                registroSelcionado.setCampo("RESULTADOTOL", '1');
+                            if (((resultadoAnaliseQuimica.compareTo(resultadoDentroTolerancia) == 1) || (resultadoAnaliseQuimica.compareTo(resultadoDentroTolerancia) == 0)) && teorMaior40==false) {
+                                registroSelcionado.setCampo("TOLERANCIA", tolerancia);
+                                registroSelcionado.setCampo("CLASSIFICACAO", '1');
+                            }else if((resultadoAnaliseQuimica.compareTo(resultadoDentroTolerancia) == 1) && teorMaior40==true) {
+                                registroSelcionado.setCampo("TOLERANCIA", tolerancia);
+                                registroSelcionado.setCampo("CLASSIFICACAO", '1');
+                            }else if((resultadoAnaliseQuimica.compareTo(resultadoDentroTolerancia) == 0) && teorMaior40==true) {
+                                registroSelcionado.setCampo("TOLERANCIA", tolerancia);
+                                registroSelcionado.setCampo("CLASSIFICACAO", '2');
+                            }else if ((resultadoAnaliseQuimica.compareTo(resultadoDentroTolerancia) == -1) && resultadoAnaliseQuimica.compareTo(deficienciaGrave) == 1) {
+                                registroSelcionado.setCampo("TOLERANCIA", tolerancia);
+                                registroSelcionado.setCampo("CLASSIFICACAO", '2');
                             } else if (((resultadoAnaliseQuimica.compareTo(deficienciaGrave) == -1) && resultadoAnaliseQuimica.compareTo(deficienciaGravissima) == 1) || resultadoAnaliseQuimica.compareTo(deficienciaGrave) == 0) {
-                                registroSelcionado.setCampo("RESULTADOFORMULA", tolerancia);
-                                registroSelcionado.setCampo("RESULTADOTOL", '2');
+                                registroSelcionado.setCampo("TOLERANCIA", tolerancia);
+                                registroSelcionado.setCampo("CLASSIFICACAO", '3');
                             } else {
-                                registroSelcionado.setCampo("RESULTADOFORMULA", tolerancia);
-                                registroSelcionado.setCampo("RESULTADOTOL", '3');
+                                registroSelcionado.setCampo("TOLERANCIA", tolerancia);
+                                registroSelcionado.setCampo("CLASSIFICACAO", '4');
                             }
                         }
                     }
