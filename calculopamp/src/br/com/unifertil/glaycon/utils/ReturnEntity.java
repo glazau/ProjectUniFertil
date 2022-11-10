@@ -1,10 +1,14 @@
 package br.com.unifertil.glaycon.utils;
 
+import br.com.sankhya.jape.EntityFacade;
+import br.com.sankhya.jape.util.FinderWrapper;
 import br.com.sankhya.jape.vo.DynamicVO;
 import br.com.sankhya.jape.wrapper.JapeFactory;
 import br.com.sankhya.jape.wrapper.JapeWrapper;
+import br.com.sankhya.modelcore.util.EntityFacadeFactory;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 
 public class ReturnEntity  {
 
@@ -34,5 +38,20 @@ public class ReturnEntity  {
         JapeWrapper entityDao = JapeFactory.dao(entidade);
         DynamicVO EntityDynamicVO = entityDao.findOne(condicao,new Object[]{parametro,parametro2});
         return EntityDynamicVO;
+    }
+
+
+    public Collection<DynamicVO> collectionVOBigDecimal (String entidade, String condicao, BigDecimal parametro) throws Exception {
+    EntityFacade dwfFacade = EntityFacadeFactory.getDWFFacade();
+    FinderWrapper finder = new FinderWrapper(entidade, condicao, new Object[] { parametro });
+    Collection<DynamicVO> collection = dwfFacade.findByDynamicFinderAsVO(finder);
+    return  collection;
+    }
+
+    public Collection<DynamicVO> collectionVOString (String entidade, String condicao, String parametro) throws Exception {
+        EntityFacade dwfFacade = EntityFacadeFactory.getDWFFacade();
+        FinderWrapper finder = new FinderWrapper(entidade, condicao, new Object[] { parametro });
+        Collection<DynamicVO> collection = dwfFacade.findByDynamicFinderAsVO(finder);
+        return  collection;
     }
 }

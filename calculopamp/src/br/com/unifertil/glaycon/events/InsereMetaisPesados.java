@@ -4,9 +4,13 @@ import br.com.sankhya.extensions.eventoprogramavel.EventoProgramavelJava;
 import br.com.sankhya.jape.event.PersistenceEvent;
 import br.com.sankhya.jape.event.TransactionContext;
 import br.com.sankhya.jape.vo.DynamicVO;
+import br.com.sankhya.jape.wrapper.JapeFactory;
+import br.com.sankhya.jape.wrapper.JapeWrapper;
+import br.com.sankhya.jape.wrapper.fluid.FluidCreateVO;
 import br.com.unifertil.glaycon.utils.*;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 
 public class InsereMetaisPesados implements EventoProgramavelJava {
     @Override
@@ -45,36 +49,42 @@ public class InsereMetaisPesados implements EventoProgramavelJava {
     }
     private void InsereMetais(PersistenceEvent event) throws Exception{
         String analiseContaminante;
-        String tp_analisavel;
+        String tpAnaliseMetal = "3";
         BigDecimal codProd;
+        BigDecimal seqAmostra;
         BigDecimal sequenciaPerfilAnalisavel;
-        DynamicVO getPerfilAnalisavel;
-        DynamicVO tabelaPerfilMetal;
-        DynamicVO ad_ctlamostra;
+        Collection<DynamicVO> collectionAnaliseMetal;
+        DynamicVO tabelaControleAmostra;
         ReturnEntity entiityUtils = new ReturnEntity();
         PerfilMetal perfilMetal = new PerfilMetal();
 
-        ad_ctlamostra = (DynamicVO) event.getVo();
+        tabelaControleAmostra = (DynamicVO) event.getVo();
 
-        codProd = ad_ctlamostra.asBigDecimalOrZero("CODPROD");
-        analiseContaminante = ad_ctlamostra.asString("ANALICONT");
+        codProd = tabelaControleAmostra.asBigDecimalOrZero("CODPROD");
+        seqAmostra = tabelaControleAmostra.asBigDecimalOrZero("SEQAMOSTRA");
+        analiseContaminante = tabelaControleAmostra.asString("ANALICONT");
+        if (analiseContaminante.equals("S")) {
 
-        getPerfilAnalisavel =  entiityUtils.getTabelaByFindOneBigDecimal("AD_PERFILANALISAVEL","CODPROD=?",codProd);
-        sequenciaPerfilAnalisavel = getPerfilAnalisavel.asBigDecimalOrZero("SEQUENCIA");
+        collectionAnaliseMetal = entiityUtils.collectionVOString("CaracteristicaAnalisavel","AD_TP_ANALISE=?",tpAnaliseMetal);
+        for (DynamicVO tabelaPerfilMetal : collectionAnaliseMetal){
 
-        tabelaPerfilMetal = entiityUtils.getTabelaByFindOneBigDecimal("AD_PERFILANALISAVEL","SEQUENCIA=?",sequenciaPerfilAnalisavel);
+        perfilMetal.setCodElemento(tabelaPerfilMetal.asBigDecimalOrZero("CODCLC"));
+        perfilMetal.setMetodo(tabelaPerfilMetal.asString("AD_METODO"));
+        perfilMetal.setObservacao(tabelaPerfilMetal.asString("OBSERVACAO"));
+        perfilMetal.setSimbolo(tabelaPerfilMetal.asString("AD_SIMBOLO"));
 
-        perfilMetal.setGarantia(tabelaPerfilMetal.asString("GARANTIA"));
-        perfilMetal.setCodElemento(tabelaPerfilMetal.asBigDecimalOrZero("CODELEMENTO"));
-        perfilMetal.setSequencia(tabelaPerfilMetal.asBigDecimalOrZero("SEQUENCIA"));
-        perfilMetal.setMetodo(tabelaPerfilMetal.asString("METODO"));
-        perfilMetal.setGarantia(tabelaPerfilMetal.asString("GARANTIA"));
-        perfilMetal.setDescNutri(tabelaPerfilMetal.asString("DESCNUTRI"));
-        perfilMetal.setVlrmax(tabelaPerfilMetal.asBigDecimalOrZero("VLRMAX"));
-        perfilMetal.setVlrmin(tabelaPerfilMetal.asBigDecimalOrZero("VLRMIN"));
+        JapeWrapper analiseMetalDao = JapeFactory.dao("AD_ANALIMET");
 
+        FluidCreateVO itemAnaliseQuimica = analiseMetalDao.create();
+        itemAnaliseQuimica.set("PERCFORMULA",perfilMetal.getGarantia());
+        itemAnaliseQuimica.set("SEQAMOSTRA",seqAmostra);
+        itemAnaliseQuimica.set("CODELEMEN",perfilMetal.getCodElemento());
+        itemAnaliseQuimica.set("METODO",perfilMetal.getMetodo());
+        itemAnaliseQuimica.save();
 
+            }
 
+        }
     }
 
 

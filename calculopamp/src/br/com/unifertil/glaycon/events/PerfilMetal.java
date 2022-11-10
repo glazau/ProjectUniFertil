@@ -9,9 +9,8 @@ public class PerfilMetal {
     private BigDecimal codElemento;
     private String metodo;
     private String garantia;
-    private String descNutri;
-    private BigDecimal vlrmax;
-    private BigDecimal vlrmin;
+    private String observacao;
+    private String simbolo;
 
     public BigDecimal getSequencia() {
         return sequencia;
@@ -52,30 +51,20 @@ public class PerfilMetal {
     public void setGarantia(String garantia) {
         this.garantia = garantia;
     }
-
-    public String getDescNutri() {
-        return descNutri;
+    public String getObservacao() {
+        return observacao;
     }
 
-    public void setDescNutri(String descNutri) {
-        this.descNutri = descNutri;
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
     }
 
-    public BigDecimal getVlrmax() {
-        return vlrmax;
+    public String getSimbolo() {
+        return simbolo;
     }
 
-    public void setVlrmax(BigDecimal vlrmax) {
-        this.vlrmax = vlrmax;
+    public void setSimbolo(String simbolo) {
+        this.simbolo = simbolo;
     }
-
-    public BigDecimal getVlrmin() {
-        return vlrmin;
-    }
-
-    public void setVlrmin(BigDecimal vlrmin) {
-        this.vlrmin = vlrmin;
-    }
-
 
 }
