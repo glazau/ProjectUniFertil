@@ -8,6 +8,7 @@ import br.com.sankhya.jape.vo.DynamicVO;
 import br.com.sankhya.jape.wrapper.JapeFactory;
 import br.com.sankhya.jape.wrapper.JapeWrapper;
 import br.com.sankhya.jape.wrapper.fluid.FluidCreateVO;
+import br.com.sankhya.modelcore.MGEModelException;
 import br.com.unifertil.glaycon.utils.*;
 
 import java.math.BigDecimal;
@@ -41,65 +42,63 @@ public class InsereMetaisPesados implements EventoProgramavelJava {
 
     @Override
     public void afterDelete(PersistenceEvent persistenceEvent) throws Exception {
-
+        InsereMetais(persistenceEvent);
     }
 
     @Override
     public void beforeCommit(TransactionContext transactionContext) throws Exception {
 
     }
-    private void InsereMetais(PersistenceEvent event) throws Exception{
 
+    private void InsereMetais(PersistenceEvent event) throws Exception {
         JapeSession.SessionHandle hnd = null;
-       try{
-        String analiseContaminante;
-        String tpAnaliseMetal = "3";
-        BigDecimal seqAmostra;
-        Collection<DynamicVO> collectionAnaliseMetal;
-        DynamicVO tabelaControleAmostra;
-        ReturnEntity entiityUtils = new ReturnEntity();
-        PerfilMetal perfilMetal = new PerfilMetal();
+        try {
+            DynamicVO tabelaControleAmostra;
+            tabelaControleAmostra = (DynamicVO) event.getVo();
+            String analiseContaminante;
+            analiseContaminante = tabelaControleAmostra.asString("ANALICONT");
+            String tpAnaliseMetal = "3";
+            BigDecimal seqAmostra;
+            Collection<DynamicVO> collectionAnaliseMetal;
 
-        tabelaControleAmostra = (DynamicVO) event.getVo();
-        seqAmostra = tabelaControleAmostra.asBigDecimalOrZero("SEQAMOSTRA");
-        analiseContaminante = tabelaControleAmostra.asString("ANALICONT");
+            ReturnEntity entiityUtils = new ReturnEntity();
+            PerfilMetal perfilMetal = new PerfilMetal();
 
-        if (analiseContaminante.equals("S")) {
-        JapeWrapper analiseMetalDao = JapeFactory.dao("AD_ANALIMET");
-        DynamicVO analimetVO = analiseMetalDao.findOne("SEQAMOSTRA=?",new Object[]{seqAmostra});
+            seqAmostra = tabelaControleAmostra.asBigDecimalOrZero("SEQAMOSTRA");
 
-        if(analimetVO==null){
-        collectionAnaliseMetal = entiityUtils.collectionVOString("CaracteristicaAnalisavel","AD_TP_ANALISE=?",tpAnaliseMetal);
-        for (DynamicVO tabelaCaracteristicaAnalisavel : collectionAnaliseMetal){
-        if(tabelaCaracteristicaAnalisavel.asString("AD_TP_ANALISE").equals(tpAnaliseMetal)){
+            if (analiseContaminante.equals("S")) {
 
-        perfilMetal.setCodElemento(tabelaCaracteristicaAnalisavel.asBigDecimalOrZero("CODCLC"));
-        perfilMetal.setMetodo(tabelaCaracteristicaAnalisavel.asString("AD_METODO"));
-        perfilMetal.setObservacao(tabelaCaracteristicaAnalisavel.asString("OBSERVACAO"));
-        perfilMetal.setSimbolo(tabelaCaracteristicaAnalisavel.asString("AD_SIMBOLO"));
+                JapeWrapper analiseMetalDao = JapeFactory.dao("AD_ANALIMET");
+                DynamicVO analimetVO = analiseMetalDao.findOne("SEQAMOSTRA=?", new Object[]{seqAmostra});
 
-            FluidCreateVO itemAnaliseMetal = analiseMetalDao.create();
+                if (analimetVO == null) {
+                    collectionAnaliseMetal = entiityUtils.collectionVOString("CaracteristicaAnalisavel", "AD_TP_ANALISE=?", tpAnaliseMetal);
+                    for (DynamicVO tabelaCaracteristicaAnalisavel : collectionAnaliseMetal) {
+                        if (tabelaCaracteristicaAnalisavel.asString("AD_TP_ANALISE").equals(tpAnaliseMetal)) {
 
-            itemAnaliseMetal.set("SEQAMOSTRA",seqAmostra);
-            itemAnaliseMetal.set("CODELEMEN",perfilMetal.getCodElemento());
-            itemAnaliseMetal.set("METODO",perfilMetal.getMetodo());
-            itemAnaliseMetal.set("OBSERVACAO",perfilMetal.getObservacao());
-            itemAnaliseMetal.set("SIMBOLO",perfilMetal.getSimbolo());
-            itemAnaliseMetal.save();
+                            perfilMetal.setCodElemento(tabelaCaracteristicaAnalisavel.asBigDecimalOrZero("CODCLC"));
+                            perfilMetal.setMetodo(tabelaCaracteristicaAnalisavel.asString("AD_METODO"));
+                            perfilMetal.setObservacao(tabelaCaracteristicaAnalisavel.asString("OBSERVACAO"));
+                            perfilMetal.setSimbolo(tabelaCaracteristicaAnalisavel.asString("AD_SIMBOLO"));
+
+                            FluidCreateVO itemAnaliseMetal = analiseMetalDao.create();
+
+                            itemAnaliseMetal.set("SEQAMOSTRA", seqAmostra);
+                            itemAnaliseMetal.set("CODELEMEN", perfilMetal.getCodElemento());
+                            itemAnaliseMetal.set("METODO", perfilMetal.getMetodo());
+                            itemAnaliseMetal.set("OBSERVACAO", perfilMetal.getObservacao());
+                            itemAnaliseMetal.set("SIMBOLO", perfilMetal.getSimbolo());
+                            itemAnaliseMetal.save();
+                        }
                     }
                 }
             }
-
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            JapeSession.close(hnd);
         }
-    } catch (Exception e) {
-           System.out.println(e);
-     } finally {
-        JapeSession.close(hnd);
-         }
-    }
 
-private void exibirErro(String mensagem) throws  Exception{
-        throw new Exception(mensagem);
-}
+    }
 
 }
