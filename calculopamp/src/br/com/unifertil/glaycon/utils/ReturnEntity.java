@@ -28,6 +28,12 @@ public class ReturnEntity  {
         DynamicVO EntityDynamicVO = entityDao.findOne(condicao,new Object[]{parametro});
         return EntityDynamicVO;
     }
+
+    public DynamicVO getTabelaByFindOneString (String entidade, String condicao,String parametro) throws Exception{
+        JapeWrapper entityDao = JapeFactory.dao(entidade);
+        DynamicVO EntityDynamicVO = entityDao.findOne(condicao,new Object[]{parametro});
+        return EntityDynamicVO;
+    }
     public DynamicVO getTabelaByFindOneBigDecimalTwoParameters (String entidade, String condicao,BigDecimal parametro,BigDecimal parametro2) throws Exception{
         JapeWrapper entityDao = JapeFactory.dao(entidade);
         DynamicVO EntityDynamicVO = entityDao.findOne(condicao,new Object[]{parametro,parametro2});
@@ -42,10 +48,17 @@ public class ReturnEntity  {
 
 
     public Collection<DynamicVO> collectionVOBigDecimal (String entidade, String condicao, BigDecimal parametro) throws Exception {
-    EntityFacade dwfFacade = EntityFacadeFactory.getDWFFacade();
-    FinderWrapper finder = new FinderWrapper(entidade, condicao, new Object[] { parametro });
-    Collection<DynamicVO> collection = dwfFacade.findByDynamicFinderAsVO(finder);
-    return  collection;
+        EntityFacade dwfFacade = EntityFacadeFactory.getDWFFacade();
+        FinderWrapper finder = new FinderWrapper(entidade, condicao, new Object[]{parametro});
+        Collection<DynamicVO> collection = dwfFacade.findByDynamicFinderAsVO(finder);
+        return collection;
+    }
+
+    public Collection<DynamicVO> collectionVOBigDecimalString (String entidade, String condicao, BigDecimal parametro, String parametro2) throws Exception {
+        EntityFacade dwfFacade = EntityFacadeFactory.getDWFFacade();
+        FinderWrapper finder = new FinderWrapper(entidade, condicao, new Object[] { parametro,parametro2 });
+        Collection<DynamicVO> collection = dwfFacade.findByDynamicFinderAsVO(finder);
+        return  collection;
     }
 
     public Collection<DynamicVO> collectionVOString (String entidade, String condicao, String parametro) throws Exception {

@@ -10,8 +10,7 @@ import br.com.sankhya.jape.dao.JdbcWrapper;
 import br.com.sankhya.jape.sql.NativeSql;
 import br.com.sankhya.jape.vo.DynamicVO;
 import br.com.sankhya.jape.wrapper.JapeFactory;
-import br.com.sankhya.jape.wrapper.JapeWrapper;
-import br.com.sankhya.modelcore.MGEModelException;
+import br.com.sankhya.jape.wrapper.JapeWrapper; 
 import br.com.sankhya.modelcore.util.EntityFacadeFactory;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
@@ -42,7 +41,9 @@ public class ActionCalculoPAMP implements AcaoRotinaJava {
                     DynamicVO controleAmostra = getControleAmostra(seqAmostra);
                     BigDecimal codprod = controleAmostra.asBigDecimalOrZero("CODPROD");
 
+
                     if (seqAmostra != null && sequencia != null && codprod != null) {
+
                         EntityFacade dwfFacade = EntityFacadeFactory.getDWFFacade();
                         jdbcWrapper = dwfFacade.getJdbcWrapper();
                         nativeSql = new NativeSql(jdbcWrapper);
@@ -89,17 +90,16 @@ public class ActionCalculoPAMP implements AcaoRotinaJava {
                             }
                         }
                     }
-
+                    contextoAcao.setMensagemRetorno("Calculado com sucesso");
                 }
             }
 
         } catch (Exception e) {
             System.out.println(e);
+            contextoAcao.setMensagemRetorno("Não foi possível efetuar o calculo");
         } finally {
             JapeSession.close(hnd);
-        }
-
-
+      }
     }
 
 
