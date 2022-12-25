@@ -1,6 +1,7 @@
 package br.com.unifertil.glaycon.utils;
 
 import br.com.sankhya.jape.EntityFacade;
+import br.com.sankhya.jape.PersistenceException;
 import br.com.sankhya.jape.util.FinderWrapper;
 import br.com.sankhya.jape.vo.DynamicVO;
 import br.com.sankhya.jape.wrapper.JapeFactory;
@@ -66,5 +67,8 @@ public class ReturnEntity  {
         FinderWrapper finder = new FinderWrapper(entidade, condicao, new Object[] { parametro });
         Collection<DynamicVO> collection = dwfFacade.findByDynamicFinderAsVO(finder);
         return  collection;
+    }
+    public static void exibirErro(String mensagem) throws Exception {
+        throw new PersistenceException(" " + mensagem + " ");
     }
 }

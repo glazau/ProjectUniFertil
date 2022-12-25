@@ -8,7 +8,6 @@ import br.com.sankhya.jape.vo.DynamicVO;
 import br.com.sankhya.jape.wrapper.JapeFactory;
 import br.com.sankhya.jape.wrapper.JapeWrapper;
 import br.com.sankhya.jape.wrapper.fluid.FluidCreateVO;
-import br.com.sankhya.modelcore.MGEModelException;
 import br.com.unifertil.glaycon.utils.*;
 
 import java.math.BigDecimal;

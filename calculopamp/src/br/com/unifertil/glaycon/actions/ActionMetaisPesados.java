@@ -128,14 +128,14 @@ public class ActionMetaisPesados implements AcaoRotinaJava {
                                     registroSelcionado.setCampo("LIMITE", valorMaximo);
                                     registroSelcionado.setCampo("CONTAMINADOS", verificaContaminados(resultadoAnaliseMetal, valorMaximo));
                                 }
-                                contextoAcao.setMensagemRetorno("Calculo do Metal efetuado com sucesso!");
+                                contextoAcao.setMensagemRetorno("CCálculo(s) do(s) Metal(is) efetuado(s) com sucesso!");
                             }
                             //faixa 2
                             if (elementoFormula.compareTo(elementoMetalPesado) == 0 && faixa.equals(tipo) && faixa.equals("FX2")) {
                                 resultadoFormula = vlrP.multiply(formula);
                                 registroSelcionado.setCampo("LIMITE", resultadoFormula);
                                 registroSelcionado.setCampo("CONTAMINADOS", verificaContaminados(resultadoAnaliseMetal, resultadoFormula));
-                                contextoAcao.setMensagemRetorno("Calculo do Metal efetuado com sucesso!");
+                                contextoAcao.setMensagemRetorno("Cálculo(s) do(s) Metal(is) efetuado(s) com sucesso!");
                             }
 
                             //faixa 3
@@ -154,7 +154,7 @@ public class ActionMetaisPesados implements AcaoRotinaJava {
                                     registroSelcionado.setCampo("LIMITE", valorMaximo);
                                     registroSelcionado.setCampo("CONTAMINADOS", verificaContaminados(resultadoAnaliseMetal, valorMaximo));
                                 }
-                                contextoAcao.setMensagemRetorno("Calculo do Metal efetuado com sucesso!");
+                                contextoAcao.setMensagemRetorno("Cálculo(s) do(s) Metal(is) efetuado(s) com sucesso!");
                             }
 
                             //faixa 4
@@ -174,7 +174,7 @@ public class ActionMetaisPesados implements AcaoRotinaJava {
                                     registroSelcionado.setCampo("LIMITE", valorMaximo);
                                     registroSelcionado.setCampo("CONTAMINADOS", verificaContaminados(resultadoAnaliseMetal, valorMaximo));
                                 }
-                                contextoAcao.setMensagemRetorno("Calculo do Metal efetuado com sucesso!");
+                                contextoAcao.setMensagemRetorno("Cálculo(s) do(s) Metal(is) efetuado(s) com sucesso!");
                             }
 
                             //faixa 5
@@ -193,7 +193,7 @@ public class ActionMetaisPesados implements AcaoRotinaJava {
                                     registroSelcionado.setCampo("LIMITE", valorMaximo);
                                     registroSelcionado.setCampo("CONTAMINADOS", verificaContaminados(resultadoAnaliseMetal, valorMaximo));
                                 }
-                                contextoAcao.setMensagemRetorno("Calculo do Metal efetuado com sucesso!");
+                                contextoAcao.setMensagemRetorno("Cálculo(s) do(s) Metal(is) efetuado(s) com sucesso!");
                             }
 
                             //faixa 6
@@ -201,7 +201,7 @@ public class ActionMetaisPesados implements AcaoRotinaJava {
                                 resultadoFormula = formula;
                                 registroSelcionado.setCampo("LIMITE", resultadoFormula);
                                 registroSelcionado.setCampo("CONTAMINADOS", verificaContaminados(resultadoAnaliseMetal, resultadoFormula));
-                                contextoAcao.setMensagemRetorno("Calculo do Metal efetuado com sucesso!");
+                                contextoAcao.setMensagemRetorno("Cálculo(s) do(s) Metal(is) efetuado(s) com sucesso!");
                             }
                         }
                     }
@@ -217,7 +217,7 @@ public class ActionMetaisPesados implements AcaoRotinaJava {
         } else if (resultadoAnaliseMetal.compareTo(resultadoFormula)==-1){
             return "2";
         } else {
-           return "1";
+           return "2";
         }
     }
 
